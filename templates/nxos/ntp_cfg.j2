@@ -9,7 +9,7 @@ ntp server {{server_item['address']}}
 {{' use-vrf default\n'}}
 {%-   endfor %}
 {#  configure the NTP source #}
-{%-   if ntp_config.get('ntp-source-address') %}
+{%-   if ntp_config.get('ntp-source-interface') %}
 ntp source-interface {{ ntp_config['ntp-source-interface'] }}
 {%-   endif %}
 {%- endif %}

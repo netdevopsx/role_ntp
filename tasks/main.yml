@@ -6,3 +6,4 @@
   include: "{{ansible_network_os}}/apply.yml"
   when:
     - not ansible_check_mode
+    - ntp_cmd|length

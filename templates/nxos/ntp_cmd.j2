@@ -1,4 +1,4 @@
-{% if ntp_current_cfg[0] is defined %}
+{% if ntp_current_cfg[0] is defined and ntp_current_cfg[0]['lines'] is defined %}
 {%   set lines_diff1 = ntp_desired_cfg | difference(ntp_current_cfg[0]['lines']) %}
 {%   set lines_diff2 = ntp_current_cfg[0]['lines'] | difference(ntp_desired_cfg) %}
 {%   if lines_diff2|length %}
@@ -11,4 +11,8 @@ no {{line_item}}
 {{line_item}}
 {%     endfor%}
 {%   endif %}
+{% else %}
+{%   for line_item in ntp_desired_cfg %}
+{{line_item}}
+{%   endfor%}
 {% endif %}
