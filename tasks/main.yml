@@ -1,0 +1,8 @@
+---
+- name: Collect config
+  nxos_facts:
+    gather_subset:
+      - config
+- name: show configuration
+  debug:
+    msg: "{{ansible_net_config.split('\n')}}"
