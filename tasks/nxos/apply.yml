@@ -1,0 +1,12 @@
+---
+- name: Upload commands to the device as file
+  net_put:
+    src: nxos/ntp_cmd.j2
+    mode: text
+    dest: ansible-config
+
+- name: Apply configuration to running-config
+  nxos_command:
+    commands: copy bootflash:///ansible-config running-config
+    retries: 1
+    wait_for: result[0] contains complete

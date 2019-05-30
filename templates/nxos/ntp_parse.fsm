@@ -1,0 +1,6 @@
+# Name of the interface
+Value Required,List lines (ntp(\S|\s).+)
+
+Start
+  ^${lines}$$
+  ^$$ -> Record

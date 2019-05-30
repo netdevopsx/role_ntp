@@ -1,8 +1,8 @@
 ---
-- name: Collect config
-  nxos_facts:
-    gather_subset:
-      - config
-- name: show configuration
-  debug:
-    msg: "{{ansible_net_config.split('\n')}}"
+- name: Prepare desired config, get current and generate diff
+  include: "{{ansible_network_os}}/check.yml"
+
+- name: Apply configuration to device
+  include: "{{ansible_network_os}}/apply.yml"
+  when:
+    - not ansible_check_mode

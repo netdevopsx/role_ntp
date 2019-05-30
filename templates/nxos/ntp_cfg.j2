@@ -1,0 +1,15 @@
+{#  Extracting the variables we need for the processing from the inventory  #}
+{%- set ntp_servers = openconfig.system.ntp.servers -%}
+{%- set ntp_config = openconfig.system.ntp.get('config', {}) -%}
+{#  Don't generate the configuration if NTP feature is disabled #}
+{%- if openconfig.system.ntp.get('config', {}).get('enabled', True) %}
+{%-   for server_item in ntp_servers.server %}
+ntp server {{server_item['address']}}
+{%-     if server_item.config.get('prefer') %} prefer{%- endif -%}
+{{' use-vrf default\n'}}
+{%-   endfor %}
+{#  configure the NTP source #}
+{%-   if ntp_config.get('ntp-source-address') %}
+ntp source-interface {{ ntp_config['ntp-source-interface'] }}
+{%-   endif %}
+{%- endif %}
