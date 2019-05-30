@@ -7,7 +7,7 @@
 - name: Collecting configuration lines from devide and desired
   set_fact:
     ntp_current_cfg: "{{ ansible_net_config|parse_cli_textfsm(''+role_path+'/templates/nxos/ntp_parse.fsm')|replace('  ',' ') }}"
-    ntp_desired_cfg: "{{ lookup('template', '{{ ansible_network_os }}/ntp_cfg.j2').split('\n') | select('match', '^.+$') | list }}"
+    ntp_desired_cfg: "{{ lookup('template', '{{ ansible_network_os }}/ntp_cfg.j2').split('\n') | difference('') | list }}"
 
 - name: Generate the commands for device
   set_fact:
